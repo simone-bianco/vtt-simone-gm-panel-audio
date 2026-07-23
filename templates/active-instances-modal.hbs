@@ -1,0 +1,69 @@
+<form class="sgmp-active-instances">
+  {{#if instances.length}}
+    <div class="sgmp-instance-toolbar">
+      <button type="button" class="sgmp-instance-mass-btn" data-action="modal-start-all"
+              title="{{localize 'SIMONE_GM_PANEL.Soundboard.StartAll'}}">
+        <i class="fa-solid fa-play" inert></i>
+        {{localize "SIMONE_GM_PANEL.Soundboard.StartAll"}}
+      </button>
+      <button type="button" class="sgmp-instance-mass-btn" data-action="modal-stop-all"
+              title="{{localize 'SIMONE_GM_PANEL.Soundboard.StopAllModal'}}">
+        <i class="fa-solid fa-stop" inert></i>
+        {{localize "SIMONE_GM_PANEL.Soundboard.StopAllModal"}}
+      </button>
+      <button type="button" class="sgmp-instance-mass-btn sgmp-instance-mass-btn--danger" data-action="modal-remove-all"
+              title="{{localize 'SIMONE_GM_PANEL.Soundboard.RemoveAllModal'}}">
+        <i class="fa-solid fa-trash" inert></i>
+        {{localize "SIMONE_GM_PANEL.Soundboard.RemoveAllModal"}}
+      </button>
+    </div>
+    <div class="sgmp-instance-list">
+      {{#each instances as |inst|}}
+        <div class="sgmp-instance-row {{#if (eq inst.type "ambient")}}is-ambient{{/if}}" data-instance-id="{{inst.id}}" data-instance-type="{{inst.type}}">
+          <div class="sgmp-instance-info">
+            {{#if (eq inst.type "ambient")}}
+              <span class="sgmp-instance-tokens">
+                <i class="fa-solid fa-location-dot" inert></i>
+                {{inst.locationLabel}}
+              </span>
+              <span class="sgmp-instance-badge sgmp-instance-badge--ambient">
+                <i class="fa-solid fa-location-dot" inert></i>
+                {{localize "SIMONE_GM_PANEL.Soundboard.ActiveInstancesAmbientBadge"}}
+              </span>
+            {{else}}
+              <span class="sgmp-instance-tokens">
+                <i class="fa-solid fa-globe" inert></i>
+                {{inst.locationLabel}}
+              </span>
+            {{/if}}
+            {{#if inst.loop}}
+              <span class="sgmp-instance-badge sgmp-instance-badge--loop">
+                <i class="fa-solid fa-repeat" inert></i> {{localize "SIMONE_GM_PANEL.Soundboard.ActiveInstancesLoop"}}
+              </span>
+            {{/if}}
+            {{#if inst.paused}}
+              <span class="sgmp-instance-badge sgmp-instance-badge--paused">{{localize "SIMONE_GM_PANEL.Soundboard.ActiveInstancesPaused"}}</span>
+            {{/if}}
+          </div>
+          <div class="sgmp-instance-actions">
+            {{#unless (eq inst.type "ambient")}}
+              <button type="button" class="sgmp-instance-btn" data-action="pause-instance" data-instance-id="{{inst.id}}"
+                      title="{{#if inst.paused}}{{localize 'SIMONE_GM_PANEL.Soundboard.ActiveInstancesResume'}}{{else}}{{localize 'SIMONE_GM_PANEL.Soundboard.ActiveInstancesPause'}}{{/if}}">
+                <i class="fa-solid {{#if inst.paused}}fa-play{{else}}fa-pause{{/if}}" inert></i>
+              </button>
+            {{/unless}}
+            <button type="button" class="sgmp-instance-btn sgmp-instance-btn--stop" data-action="stop-instance" data-instance-id="{{inst.id}}"
+                    title="{{localize 'SIMONE_GM_PANEL.Soundboard.Stop'}}">
+              <i class="fa-solid fa-stop" inert></i>
+            </button>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+    {{#if hasAmbientInstances}}
+      <p class="sgmp-instance-empty">{{localize "SIMONE_GM_PANEL.Soundboard.ActiveInstancesCannotPause"}}</p>
+    {{/if}}
+  {{else}}
+    <p class="sgmp-instance-empty">{{localize "SIMONE_GM_PANEL.Soundboard.NoActiveInstances"}}</p>
+  {{/if}}
+</form>

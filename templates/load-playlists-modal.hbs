@@ -1,0 +1,48 @@
+<form class="sgmp-playlists-modal">
+  <header class="sgmp-playlists-header">
+    <input
+      type="search"
+      class="sgmp-playlists-search"
+      placeholder="{{localize 'SIMONE_GM_PANEL.Soundboard.LoadSearchPlaceholder'}}"
+      autocomplete="off"
+      spellcheck="false"
+    >
+    <button type="button" class="sgmp-playlists-new" data-action="new-playlist"
+            aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.NewPlaylist'}}" title="{{localize 'SIMONE_GM_PANEL.Soundboard.NewPlaylist'}}">+</button>
+  </header>
+
+  {{#if playlists.length}}
+    <div class="sgmp-playlists-list">
+      {{#each playlists as |pl|}}
+        <div class="sgmp-playlist-row{{#if pl.isCurrent}} sgmp-playlist-row--active{{/if}}" data-playlist-key="{{pl.key}}">
+          <button type="button" class="sgmp-playlist-row-drag" data-action="drag-playlist" draggable="true"
+                  aria-label="Reorder" title="Reorder">
+            <i class="fa-solid fa-grip-vertical" inert></i>
+          </button>
+
+          <div class="sgmp-playlist-row-meta">
+            <div class="sgmp-playlist-row-name">{{pl.name}}</div>
+            <div class="sgmp-playlist-row-count">{{pl.count}} sound{{#if (gt pl.count 1)}}s{{/if}}</div>
+          </div>
+
+          <button type="button" class="sgmp-playlist-row-load" data-action="load-playlist" data-playlist-key="{{pl.key}}"
+                  aria-label="Load" title="Load">
+            <i class="fa-solid fa-folder-open" inert></i>
+          </button>
+
+          <button type="button" class="sgmp-playlist-row-rename" data-action="rename-playlist" data-playlist-key="{{pl.key}}"
+                  aria-label="Rename" title="Rename">
+            <i class="fa-solid fa-pen" inert></i>
+          </button>
+
+          <button type="button" class="sgmp-playlist-row-delete" data-action="delete-playlist" data-playlist-key="{{pl.key}}"
+                  aria-label="Delete" title="Delete">
+            <i class="fa-solid fa-trash" inert></i>
+          </button>
+        </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <p class="sgmp-playlists-empty">{{localize "SIMONE_GM_PANEL.Soundboard.LoadEmpty"}}</p>
+  {{/if}}
+</form>

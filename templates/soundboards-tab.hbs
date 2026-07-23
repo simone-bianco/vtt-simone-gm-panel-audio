@@ -1,0 +1,357 @@
+<section class="sgmp-tab-panel tab{{#if tab.active}} active{{/if}}" data-group="{{tab.group}}" data-tab="{{tab.id}}">
+  {{#if recentPlaylists.length}}
+  <div class="sgmp-recent-playlists">
+    {{#each recentPlaylists as |pl|}}
+    <button
+      type="button"
+      class="sgmp-recent-chip{{#if pl.isCurrent}} sgmp-recent-chip--active{{/if}}"
+      data-action="quick-load-playlist"
+      data-playlist-key="{{pl.key}}"
+      title="{{pl.name}} ({{pl.count}} {{localize 'SIMONE_GM_PANEL.Soundboard.RecentTracks'}})"
+      aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.QuickLoad' name=pl.name}}"
+    >
+      {{pl.name}}
+      <span class="sgmp-recent-chip-count">{{pl.count}}</span>
+    </button>
+    {{/each}}
+  </div>
+  {{/if}}
+  {{#if selectedItemCount}}
+  <div class="sgmp-selection-bar">
+    <span class="sgmp-selection-count">{{selectedItemCount}} {{localize "SIMONE_GM_PANEL.Soundboard.SelectedCount"}}</span>
+    <button type="button" class="sgmp-create-group-btn" data-action="create-group-from-selection">
+      <i class="fa-solid fa-layer-group" inert></i>
+      {{localize "SIMONE_GM_PANEL.Soundboard.CreateGroup"}}
+    </button>
+  </div>
+  {{/if}}
+  <div class="sgmp-soundboard-toolbar">
+     <div class="sgmp-soundboard-toolbar-left">
+      <button
+        type="button"
+        class="sgmp-new-btn"
+        data-action="new-soundboard"
+        aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.NewPlaylist'}}"
+        title="{{localize 'SIMONE_GM_PANEL.Soundboard.NewPlaylist'}}"
+      >
+        <i class="fa-solid fa-plus" inert></i>
+      </button>
+      <button
+        type="button"
+        class="sgmp-import-btn"
+        data-action="load-soundboard"
+        aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.Load'}}"
+        title="{{localize 'SIMONE_GM_PANEL.Soundboard.Load'}}"
+      >
+        <i class="fa-solid fa-folder-open" inert></i>
+        {{localize "SIMONE_GM_PANEL.Soundboard.Load"}}
+      </button>
+    </div>
+    {{#if currentPlaylistName}}
+      <button
+        type="button"
+        class="sgmp-delete-playlist-btn"
+        data-action="delete-current-playlist"
+        aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.DeletePlaylist'}}"
+        title="{{localize 'SIMONE_GM_PANEL.Soundboard.DeletePlaylist'}}"
+      >
+        <i class="fa-solid fa-trash" inert></i>
+        {{localize "SIMONE_GM_PANEL.Soundboard.DeletePlaylist"}}
+      </button>
+    {{/if}}
+    {{#if soundboardEntries.length}}
+      <button
+        type="button"
+        class="sgmp-clean-all-btn"
+        data-action="clean-all-sounds"
+        aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.CleanAll'}}"
+        title="{{localize 'SIMONE_GM_PANEL.Soundboard.CleanAll'}}"
+      >
+        <i class="fa-solid fa-broom" inert></i>
+        {{localize "SIMONE_GM_PANEL.Soundboard.CleanAll"}}
+      </button>
+    {{/if}}
+  </div>
+  <div class="sgmp-section-card sgmp-soundboard-shell sgmp-soundboard-dropzone{{#if isRestoring}} sgmp-loading{{/if}}" data-testid="sgmp-soundboard-dropzone">
+    <header class="sgmp-soundboard-header">
+      <input
+        type="search"
+        class="sgmp-soundboard-search"
+        data-testid="sgmp-soundboard-search"
+        value="{{soundboardSearchQuery}}"
+        placeholder="{{localize 'SIMONE_GM_PANEL.Soundboard.SearchPlaceholder'}}"
+        autocomplete="off"
+        spellcheck="false"
+      >
+    </header>
+
+    <p class="sgmp-hint sgmp-soundboard-drop-copy">{{localize "SIMONE_GM_PANEL.Soundboard.DropHint"}}</p>
+
+    {{#if soundboardRows.length}}
+      <div class="sgmp-soundboard-list">
+        {{#each soundboardRows as |row|}}
+          {{#if row.isItem}}
+          <article
+            class="sgmp-sound-row{{#unless row.available}} is-missing{{/unless}}{{#if row.isPlaying}} is-playing{{/if}}{{#if row.expanded}} is-expanded{{/if}}"
+            data-testid="sgmp-sound-row"
+            data-layout-id="{{row.id}}"
+            data-row-type="item"
+            data-sound-uuid="{{row.uuid}}"
+            data-item-id="{{row.id}}"
+          >
+            <div class="sgmp-sound-row-main">
+              <button
+                type="button"
+                class="sgmp-sound-row-select"
+                data-action="toggle-item-selection"
+                data-item-id="{{row.id}}"
+                title="{{localize 'SIMONE_GM_PANEL.Soundboard.SelectTrack'}}"
+                aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.SelectTrack'}}"
+              >
+                <i class="fa-regular {{#if row.isSelected}}fa-square-check{{else}}fa-square{{/if}}" inert></i>
+              </button>
+              <button
+                type="button"
+                class="sgmp-sound-row-drag"
+                data-action="drag-sound"
+                draggable="true"
+                aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.Reorder'}}"
+                title="{{localize 'SIMONE_GM_PANEL.Soundboard.Reorder'}}"
+              >
+                <i class="fa-solid fa-grip-vertical" inert></i>
+              </button>
+
+              <button
+                type="button"
+                class="sgmp-sound-row-loop{{#if row.loop}} is-active{{/if}}"
+                data-action="toggle-loop"
+                data-sound-uuid="{{row.uuid}}"
+                aria-label="{{#if row.loop}}{{localize 'SIMONE_GM_PANEL.Soundboard.LoopOff'}}{{else}}{{localize 'SIMONE_GM_PANEL.Soundboard.LoopOn'}}{{/if}}"
+                title="{{#if row.loop}}{{localize 'SIMONE_GM_PANEL.Soundboard.LoopOff'}}{{else}}{{localize 'SIMONE_GM_PANEL.Soundboard.LoopOn'}}{{/if}}"
+              >
+                <i class="fa-solid fa-repeat" inert></i>
+              </button>
+
+              <button
+                type="button"
+                class="sgmp-sound-row-play{{#if row.activeInstanceCount}} is-active{{/if}}"
+                data-action="play-sound"
+                data-sound-uuid="{{row.uuid}}"
+                aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.PlayNewInstance'}}"
+                title="{{localize 'SIMONE_GM_PANEL.Soundboard.PlayNewInstance'}}"
+                {{#unless row.available}}disabled{{/unless}}
+              >
+                <i class="fa-solid fa-play" inert></i>
+                {{#if row.activeInstanceCount}}
+                  <span class="sgmp-play-badge">{{row.activeInstanceCount}}</span>
+                {{/if}}
+              </button>
+
+              <div class="sgmp-sound-row-meta">
+                <div class="sgmp-sound-row-name">{{row.name}}</div>
+                <div class="sgmp-sound-row-subtitle" title="{{row.subtitle}}">
+                  {{#if row.playlistName}}{{row.playlistName}} · {{/if}}{{row.subtitle}}
+                </div>
+
+              </div>
+
+              <button
+                type="button"
+                class="sgmp-sound-row-remove"
+                data-action="remove-sound"
+                data-sound-uuid="{{row.uuid}}"
+                aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.Remove'}}"
+                title="{{localize 'SIMONE_GM_PANEL.Soundboard.Remove'}}"
+              >
+                <i class="fa-solid fa-trash" inert></i>
+              </button>
+
+              <button
+                type="button"
+                class="sgmp-sound-row-settings"
+                data-action="sound-settings"
+                data-sound-uuid="{{row.uuid}}"
+                aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.Settings'}}"
+                title="{{localize 'SIMONE_GM_PANEL.Soundboard.Settings'}}"
+              >
+                <i class="fa-solid fa-gear" inert></i>
+              </button>
+
+            </div>
+
+            {{#if row.expanded}}
+              {{#if row.hasExpandedContent}}
+              <div class="sgmp-sound-row-expanded">
+                <div class="sgmp-expanded-toolbar">
+                  <button type="button" class="sgmp-expanded-mass-btn" data-action="expand-resume-all" data-sound-uuid="{{row.uuid}}"
+                          title="{{localize 'SIMONE_GM_PANEL.Soundboard.StartAll'}}">
+                    <i class="fa-solid fa-play" inert></i> {{localize "SIMONE_GM_PANEL.Soundboard.StartAll"}}
+                  </button>
+                  <button type="button" class="sgmp-expanded-mass-btn" data-action="expand-pause-all" data-sound-uuid="{{row.uuid}}"
+                          title="{{localize 'SIMONE_GM_PANEL.Soundboard.PauseAll'}}">
+                    <i class="fa-solid fa-pause" inert></i> {{localize "SIMONE_GM_PANEL.Soundboard.PauseAll"}}
+                  </button>
+                  <button type="button" class="sgmp-expanded-mass-btn sgmp-expanded-mass-btn--danger" data-action="expand-remove-all" data-sound-uuid="{{row.uuid}}"
+                          title="{{localize 'SIMONE_GM_PANEL.Soundboard.RemoveAllModal'}}">
+                    <i class="fa-solid fa-trash" inert></i> {{localize "SIMONE_GM_PANEL.Soundboard.RemoveAllModal"}}
+                  </button>
+                </div>
+                <div class="sgmp-expanded-instance-list">
+                  {{#each row.instances as |inst|}}
+                    <div class="sgmp-expanded-instance-row{{#if (eq inst.type "ambient")}} is-ambient{{/if}}"
+                         data-instance-id="{{inst.id}}" data-instance-type="{{inst.type}}">
+                      <div class="sgmp-expanded-instance-info">
+                        {{#if (eq inst.type "ambient")}}
+                          <i class="fa-solid fa-location-dot" inert></i>
+                          {{#if inst.tokenName}}
+                          <button type="button" class="sgmp-expanded-token-btn" data-action="pan-to-token" data-token-uuid="{{inst.tokenUuid}}"
+                                  title="{{localize 'SIMONE_GM_PANEL.Tokens.PanTo' name=inst.tokenName}}">
+                            {{inst.tokenName}}
+                          </button>
+                          {{else}}
+                          <span class="sgmp-expanded-token-name">{{localize "SIMONE_GM_PANEL.Soundboard.SessionToken"}}</span>
+                          {{/if}}
+                        {{else}}
+                          <i class="fa-solid fa-globe" inert></i>
+                          <span>{{localize "SIMONE_GM_PANEL.Soundboard.GlobalAudio"}}</span>
+                        {{/if}}
+                        {{#if inst.loop}}
+                          <span class="sgmp-expanded-badge sgmp-expanded-badge--loop">
+                            <i class="fa-solid fa-repeat" inert></i>
+                          </span>
+                        {{/if}}
+                        {{#if inst.paused}}
+                          <span class="sgmp-expanded-badge sgmp-expanded-badge--paused">{{localize "SIMONE_GM_PANEL.Soundboard.ActiveInstancesPaused"}}</span>
+                        {{/if}}
+                      </div>
+                      <div class="sgmp-expanded-instance-actions">
+                        <button type="button" class="sgmp-expanded-instance-btn" data-action="pause-instance" data-instance-id="{{inst.id}}"
+                                title="{{#if inst.paused}}{{localize 'SIMONE_GM_PANEL.Soundboard.ActiveInstancesResume'}}{{else}}{{localize 'SIMONE_GM_PANEL.Soundboard.ActiveInstancesPause'}}{{/if}}">
+                          <i class="fa-solid {{#if inst.paused}}fa-play{{else}}fa-pause{{/if}}" inert></i>
+                        </button>
+                        <button type="button" class="sgmp-expanded-instance-btn sgmp-expanded-instance-btn--stop" data-action="remove-instance" data-instance-id="{{inst.id}}"
+                                title="{{localize 'SIMONE_GM_PANEL.Soundboard.Remove'}}">
+                          <i class="fa-solid fa-trash" inert></i>
+                        </button>
+                      </div>
+                    </div>
+                  {{/each}}
+                </div>
+                {{#if row.hasAmbientInstances}}
+                  <p class="sgmp-expanded-hint">{{localize "SIMONE_GM_PANEL.Soundboard.ActiveInstancesCannotPause"}}</p>
+                {{/if}}
+              </div>
+              {{/if}}
+            {{/if}}
+          </article>
+          {{else if row.isGroup}}
+          <article class="sgmp-group-row{{#if row.expanded}} is-expanded{{/if}}"
+                   data-testid="sgmp-sound-row"
+                   data-layout-id="{{row.id}}"
+                   data-row-type="group"
+                   data-group-id="{{row.id}}">
+            <div class="sgmp-group-row-main">
+              <button type="button" class="sgmp-group-grip" data-action="drag-sound" draggable="true"
+                      aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.DragToReorder'}}" title="{{localize 'SIMONE_GM_PANEL.Soundboard.DragToReorder'}}">
+                <i class="fa-solid fa-grip-vertical" inert></i>
+              </button>
+              <button type="button" class="sgmp-group-play" data-action="play-group" data-group-id="{{row.id}}"
+                       aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.PlayGroup'}}" title="{{localize 'SIMONE_GM_PANEL.Soundboard.PlayGroup'}}">
+                 <i class="fa-solid fa-play" inert></i>
+                 {{#if row.activeCount}}<span class="sgmp-play-badge">{{row.activeCount}}</span>{{/if}}
+               </button>
+               <div class="sgmp-group-row-meta">
+                <div class="sgmp-group-row-name">{{row.name}}</div>
+                <div class="sgmp-group-row-info">{{row.itemCount}} {{localize 'SIMONE_GM_PANEL.Soundboard.Tracks'}} · {{#if (eq row.mode "random")}}{{localize 'SIMONE_GM_PANEL.Soundboard.ModeRandom'}}{{else}}{{localize 'SIMONE_GM_PANEL.Soundboard.ModeSequential'}}{{/if}}</div>
+              </div>
+              <button type="button" class="sgmp-group-settings-btn" data-action="group-settings" data-group-id="{{row.id}}"
+                      aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.Settings'}}" title="{{localize 'SIMONE_GM_PANEL.Soundboard.Settings'}}">
+                <i class="fa-solid fa-gear" inert></i>
+              </button>
+              <button type="button" class="sgmp-group-remove" data-action="remove-group" data-group-id="{{row.id}}"
+                      aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.Remove'}}" title="{{localize 'SIMONE_GM_PANEL.Soundboard.Remove'}}">
+                <i class="fa-solid fa-trash" inert></i>
+               </button>
+             </div>
+            {{#if row.expanded}}
+            <div class="sgmp-group-runtime">
+              <div class="sgmp-group-runtime-actions">
+                <button type="button" class="sgmp-group-runtime-btn" data-action="play-group" data-group-id="{{row.id}}"
+                        title="{{localize 'SIMONE_GM_PANEL.Soundboard.StartAll'}}">
+                  <i class="fa-solid fa-play" inert></i> {{localize 'SIMONE_GM_PANEL.Soundboard.StartAll'}}
+                </button>
+                <button type="button" class="sgmp-group-runtime-btn" data-action="pause-group-all" data-group-id="{{row.id}}"
+                        title="{{localize 'SIMONE_GM_PANEL.Soundboard.PauseAll'}}">
+                  <i class="fa-solid fa-pause" inert></i> {{localize 'SIMONE_GM_PANEL.Soundboard.PauseAll'}}
+                </button>
+                <button type="button" class="sgmp-group-runtime-btn sgmp-group-runtime-btn--danger" data-action="remove-group-sessions" data-group-id="{{row.id}}"
+                        title="{{localize 'SIMONE_GM_PANEL.Soundboard.RemoveAll'}}">
+                  <i class="fa-solid fa-trash" inert></i> {{localize 'SIMONE_GM_PANEL.Soundboard.RemoveAll'}}
+                </button>
+              </div>
+              {{#if row.sessions}}
+              <div class="sgmp-group-session-chips">
+                {{#each row.sessions}}
+                <div class="sgmp-group-session-chip{{#if (eq status "playing")}} is-playing{{/if}}{{#if (eq status "paused")}} is-paused{{/if}}"
+                     data-session-id="{{id}}" data-group-id="{{groupId}}" data-token-uuid="{{tokenUuid}}"
+                     data-action="pan-group-session">
+                  <span class="sgmp-chip-status-indicator" data-status="{{status}}"></span>
+                  <span class="sgmp-chip-label">{{tokenName}}</span>
+                  {{#if currentSoundName}}
+                  <span class="sgmp-chip-sound-name">{{currentSoundName}}</span>
+                  {{/if}}
+                  <span class="sgmp-chip-status-text">
+                    {{#if (eq status "playing")}}{{localize 'SIMONE_GM_PANEL.Soundboard.Playing'}}
+                    {{else if (eq status "paused")}}{{localize 'SIMONE_GM_PANEL.Soundboard.Paused'}}
+                    {{else}}{{localize 'SIMONE_GM_PANEL.Soundboard.Waiting'}}{{/if}}
+                  </span>
+                  <button type="button" class="sgmp-chip-btn" data-action="toggle-group-session" data-session-id="{{id}}"
+                          title="{{#if paused}}{{localize 'SIMONE_GM_PANEL.Soundboard.Resume'}}{{else}}{{localize 'SIMONE_GM_PANEL.Soundboard.Pause'}}{{/if}}">
+                    <i class="fa-solid {{#if paused}}fa-play{{else}}fa-pause{{/if}}" inert></i>
+                  </button>
+                  <button type="button" class="sgmp-chip-btn sgmp-chip-btn--trash" data-action="remove-group-session" data-session-id="{{id}}"
+                          title="{{localize 'SIMONE_GM_PANEL.Soundboard.Remove'}}">
+                    <i class="fa-solid fa-trash" inert></i>
+                  </button>
+                </div>
+                {{/each}}
+              </div>
+              {{/if}}
+            </div>
+            {{/if}}
+          </article>
+          {{else if row.isGroupMember}}
+          <article class="sgmp-group-member{{#unless row.available}} is-missing{{/unless}}"
+                   data-testid="sgmp-sound-row"
+                   data-row-type="member"
+                   data-sound-uuid="{{row.uuid}}"
+                   data-item-id="{{row.id}}"
+                   data-group-id="{{row.groupId}}">
+            <div class="sgmp-group-member-main">
+              <button type="button" class="sgmp-group-member-grip" data-action="drag-sound" draggable="true"
+                      aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.DragToReorder'}}" title="{{localize 'SIMONE_GM_PANEL.Soundboard.DragToReorder'}}">
+                <i class="fa-solid fa-grip-vertical" inert></i>
+              </button>
+              <button type="button" class="sgmp-group-member-play" data-action="play-sound" data-sound-uuid="{{row.uuid}}"
+                      {{#unless row.available}}disabled{{/unless}}
+                      aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.PlayPreview'}}" title="{{localize 'SIMONE_GM_PANEL.Soundboard.PlayPreview'}}">
+                <i class="fa-solid fa-play" inert></i>
+              </button>
+              <div class="sgmp-group-member-meta">
+                <div class="sgmp-group-member-name">{{row.name}}</div>
+                <div class="sgmp-group-member-subtitle" title="{{row.subtitle}}">{{row.subtitle}}</div>
+              </div>
+              <button type="button" class="sgmp-group-member-remove" data-action="remove-group-member" data-group-id="{{row.groupId}}" data-item-id="{{row.id}}"
+                      aria-label="{{localize 'SIMONE_GM_PANEL.Soundboard.RemoveFromGroup'}}" title="{{localize 'SIMONE_GM_PANEL.Soundboard.RemoveFromGroup'}}">
+                <i class="fa-solid fa-xmark" inert></i>
+              </button>
+            </div>
+          </article>
+          {{/if}}
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="sgmp-soundboard-empty">{{localize "SIMONE_GM_PANEL.Soundboard.Empty"}}</div>
+    {{/if}}
+  </div>
+</section>

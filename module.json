@@ -1,0 +1,58 @@
+{
+  "id": "simone-gm-panel-sounds",
+  "title": "Simone GM Panel Sounds",
+  "description": "Soundboard, playlists, groups, and positional audio for Simone GM Panel.",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "relationships": {
+    "requires": [
+      {
+        "id": "simone-gm-panel",
+        "type": "module",
+        "manifest": "https://github.com/simone-bianco/vtt-simone-gm-panel-core/releases/latest/download/module.json",
+        "compatibility": {
+          "minimum": "1.0.0",
+          "verified": "1.0.0"
+        }
+      }
+    ],
+    "recommends": [],
+    "conflicts": []
+  },
+  "authors": [
+    {
+      "name": "Simone Bianco"
+    }
+  ],
+  "esmodules": [
+    "scripts/main.js"
+  ],
+  "styles": [
+    "styles/module-soundboard.css",
+    "styles/module-soundboard-instances.css",
+    "styles/module-modals.css",
+    "styles/module-groups.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json"
+    },
+    {
+      "lang": "it",
+      "name": "Italiano",
+      "path": "languages/it.json"
+    }
+  ],
+  "url": "https://github.com/simone-bianco/vtt-simone-gm-panel-audio",
+  "manifest": "https://github.com/simone-bianco/vtt-simone-gm-panel-audio/releases/latest/download/module.json",
+  "download": "https://github.com/simone-bianco/vtt-simone-gm-panel-audio/releases/download/v1.0.0/simone-gm-panel-sounds.zip",
+  "readme": "https://raw.githubusercontent.com/simone-bianco/vtt-simone-gm-panel-audio/main/README.md",
+  "changelog": "https://raw.githubusercontent.com/simone-bianco/vtt-simone-gm-panel-audio/main/CHANGELOG.md",
+  "license": "https://raw.githubusercontent.com/simone-bianco/vtt-simone-gm-panel-audio/main/LICENSE",
+  "bugs": "https://github.com/simone-bianco/vtt-simone-gm-panel-audio/issues"
+}

@@ -1,0 +1,426 @@
+﻿/* â”€â”€ Group Rows â”€â”€ */
+.sgmp-group-row {
+  border: 1px solid var(--sgmp-border);
+  border-left: 3px solid rgba(216, 167, 79, 0.35);
+  border-radius: 5px;
+  margin-bottom: 0.25rem;
+  background: rgba(216, 167, 79, 0.04);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.sgmp-group-row:hover {
+  background: rgba(216, 167, 79, 0.1);
+  border-color: rgba(216, 167, 79, 0.45);
+}
+
+.sgmp-group-row-main {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.45rem 0.4rem;
+  min-height: 40px;
+}
+
+.sgmp-group-grip {
+  flex-shrink: 0;
+  width: 16px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-light-7);
+  font-size: 0.5rem;
+  cursor: grab;
+  border-radius: 2px;
+  user-select: none;
+}
+.sgmp-group-grip:hover { color: var(--color-text-light-4); }
+.sgmp-group-grip:active { cursor: grabbing; }
+
+/* Prevent text selection on all rows during drag */
+.sgmp-is-dragging .sgmp-soundboard-list,
+.sgmp-is-dragging .sgmp-soundboard-list * {
+  user-select: none;
+}
+
+.sgmp-group-expand-toggle {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-light-5);
+  font-size: 0.5rem;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: 100ms;
+}
+.sgmp-group-expand-toggle:hover { color: var(--sgmp-accent); }
+
+.sgmp-group-play {
+  flex-shrink: 0;
+  width: 24px;
+  height: 22px;
+  border: 1px solid rgba(88, 184, 130, 0.3);
+  border-radius: 4px;
+  background: rgba(88, 184, 130, 0.08);
+  color: #7ce0a5;
+  font-size: 0.48rem;
+  cursor: pointer;
+  position: relative;
+}
+.sgmp-group-play:hover { background: rgba(88, 184, 130, 0.16); }
+.sgmp-group-play .sgmp-play-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  font-size: 0.38rem;
+  background: #58b882;
+  color: #000;
+  border-radius: 3px;
+  padding: 0 2px;
+  line-height: 1.2;
+}
+
+.sgmp-group-stop {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(220, 66, 66, 0.25);
+  border-radius: 4px;
+  background: rgba(220, 66, 66, 0.06);
+  color: #f48c8c;
+  font-size: 0.44rem;
+  cursor: pointer;
+}
+.sgmp-group-stop:hover { background: rgba(220, 66, 66, 0.15); }
+
+.sgmp-group-row-meta {
+  flex: 1;
+  min-width: 0;
+}
+.sgmp-group-row-name {
+  font-size: 0.6rem;
+  color: var(--color-text-light-0);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sgmp-group-row-info {
+  font-size: 0.46rem;
+  color: var(--color-text-light-6);
+}
+
+.sgmp-group-settings-btn,
+.sgmp-group-remove {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  font-size: 0.52rem;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.sgmp-group-settings-btn { color: var(--sgmp-accent); }
+.sgmp-group-settings-btn:hover { color: var(--sgmp-accent); background: rgba(255, 255, 255, 0.08); }
+.sgmp-group-remove { color: #d97a7a; }
+.sgmp-group-remove:hover { color: #f48c8c; background: rgba(220, 66, 66, 0.1); }
+
+.sgmp-group-row.is-dragging {
+  opacity: 0.5;
+  transform: scale(0.97);
+  border-style: dashed;
+  border-color: var(--sgmp-accent);
+  background: rgba(216, 167, 79, 0.08);
+}
+
+.sgmp-group-row.is-drop-before {
+  box-shadow: inset 0 3px 0 0 var(--sgmp-accent);
+  background: linear-gradient(180deg, rgba(216, 167, 79, 0.1), transparent 40%);
+}
+
+.sgmp-group-row.is-drop-after {
+  box-shadow: inset 0 -3px 0 0 var(--sgmp-accent);
+  background: linear-gradient(0deg, rgba(216, 167, 79, 0.1), transparent 40%);
+}
+
+/* Group Member (inside expanded group â€” editorial list, not a track) */
+.sgmp-group-member {
+  margin-left: 1.2rem;
+  border-left: 2px solid rgba(216, 167, 79, 0.2);
+
+  border-radius: 0 4px 4px 0;
+  padding: 0.1rem 0;
+}
+.sgmp-group-member.is-missing {
+  opacity: 0.45;
+}
+.sgmp-group-member-main {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.15rem 0.4rem 0.15rem 0.3rem;
+  min-height: 28px;
+}
+.sgmp-group-member-grip {
+  flex-shrink: 0;
+  width: 14px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-light-7);
+  font-size: 0.45rem;
+  cursor: grab;
+  border-radius: 2px;
+  user-select: none;
+}
+.sgmp-group-member-grip:hover { color: var(--color-text-light-4); }
+.sgmp-group-member-grip:active { cursor: grabbing; }
+.sgmp-group-member-play {
+  flex-shrink: 0;
+  width: 20px;
+  height: 18px;
+  border: 1px solid rgba(88, 184, 130, 0.25);
+  border-radius: 3px;
+  background: rgba(88, 184, 130, 0.06);
+  color: #7ce0a5;
+  font-size: 0.38rem;
+  cursor: pointer;
+}
+.sgmp-group-member-play:hover { background: rgba(88, 184, 130, 0.14); }
+.sgmp-group-member-play:disabled { opacity: 0.3; cursor: not-allowed; }
+.sgmp-group-member-meta {
+  flex: 1;
+  min-width: 0;
+}
+.sgmp-group-member-name {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--color-text-light-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+  pointer-events: none;
+}
+.sgmp-group-member-subtitle {
+  font-size: 0.52rem;
+  color: var(--color-text-light-5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+  pointer-events: none;
+}
+.sgmp-group-member-subtitle {
+  font-size: 0.42rem;
+  color: var(--color-text-light-6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sgmp-group-member-remove {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: none;
+  background: transparent;
+  color: #c97a7a;
+  font-size: 0.48rem;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.sgmp-group-member-remove:hover { color: #f48c8c; background: rgba(220, 66, 66, 0.1); }
+
+/* â”€â”€ Selection Bar â”€â”€ */
+.sgmp-selection-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.25rem;
+  margin-bottom: 0.15rem;
+  background: rgba(216, 167, 79, 0.06);
+  border: 1px solid rgba(216, 167, 79, 0.2);
+  border-radius: 4px;
+}
+.sgmp-selection-count {
+  font-size: 0.5rem;
+  color: var(--sgmp-accent);
+  font-weight: 600;
+}
+.sgmp-create-group-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  height: 20px;
+  padding: 0 0.4rem;
+  border: 1px solid var(--sgmp-accent);
+  border-radius: 4px;
+  background: rgba(216, 167, 79, 0.12);
+  color: var(--sgmp-accent);
+  font-size: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 100ms;
+}
+.sgmp-create-group-btn:hover {
+  background: rgba(216, 167, 79, 0.22);
+}
+
+/* â”€â”€ Sound Row Select Toggle â”€â”€ */
+.sgmp-sound-row-select {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-light-6);
+  font-size: 0.72rem;
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 0;
+  transition: 100ms;
+}
+.sgmp-sound-row-select:hover {
+  color: var(--sgmp-accent);
+}
+
+/* Group Runtime Panel (expanded group controls + session chips) */
+.sgmp-group-runtime {
+  margin-left: 1.2rem;
+  border-left: 2px solid rgba(216, 167, 79, 0.15);
+  padding: 0.3rem 0.5rem 0.4rem;
+}
+
+.sgmp-group-runtime-actions {
+  display: flex;
+  gap: 0.3rem;
+  margin-bottom: 0.35rem;
+}
+
+.sgmp-group-runtime-btn {
+  flex: 0 0 auto;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.55rem;
+  font-weight: 500;
+  border: 1px solid var(--color-border-light-2);
+  border-radius: 4px;
+  background: rgba(30, 25, 20, 0.5);
+  color: var(--color-text-light-4);
+  cursor: pointer;
+  transition: 120ms;
+}
+.sgmp-group-runtime-btn:hover {
+  background: rgba(216, 167, 79, 0.1);
+  border-color: rgba(216, 167, 79, 0.3);
+  color: var(--color-text-light-2);
+}
+.sgmp-group-runtime-btn--danger:hover {
+  background: rgba(220, 66, 66, 0.1);
+  border-color: rgba(220, 66, 66, 0.3);
+  color: #f48c8c;
+}
+
+/* Session Chips */
+.sgmp-group-session-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.sgmp-group-session-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+  background: rgba(30, 25, 20, 0.4);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: 120ms;
+  min-height: 22px;
+}
+.sgmp-group-session-chip:hover {
+  background: rgba(216, 167, 79, 0.08);
+  border-color: rgba(216, 167, 79, 0.2);
+}
+.sgmp-group-session-chip.is-playing {
+  border-color: rgba(88, 184, 130, 0.3);
+  background: rgba(88, 184, 130, 0.06);
+}
+.sgmp-group-session-chip.is-paused {
+  border-color: rgba(216, 167, 79, 0.2);
+  opacity: 0.7;
+}
+
+.sgmp-chip-status-indicator {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-text-light-7);
+}
+.sgmp-group-session-chip.is-playing .sgmp-chip-status-indicator {
+  background: #58b882;
+  box-shadow: 0 0 3px rgba(88, 184, 130, 0.5);
+}
+.sgmp-group-session-chip.is-paused .sgmp-chip-status-indicator {
+  background: #d8a74f;
+}
+
+.sgmp-chip-label {
+  flex: 1;
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--color-text-light-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+  pointer-events: none;
+}
+
+.sgmp-chip-sound-name {
+  font-size: 0.5rem;
+  font-style: italic;
+  color: var(--color-text-light-5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.sgmp-chip-status-text {
+  font-size: 0.5rem;
+  color: var(--color-text-light-6);
+  user-select: none;
+  pointer-events: none;
+}
+
+.sgmp-chip-btn {
+  flex-shrink: 0;
+  width: 18px;
+  height: 16px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-light-5);
+  font-size: 0.45rem;
+  cursor: pointer;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.sgmp-chip-btn:hover {
+  color: var(--color-text-light-3);
+  background: rgba(200, 200, 200, 0.08);
+}
+.sgmp-chip-btn--trash:hover {
+  color: #f48c8c;
+  background: rgba(220, 66, 66, 0.1);
+}

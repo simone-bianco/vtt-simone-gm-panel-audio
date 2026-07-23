@@ -1,0 +1,128 @@
+<form class="sgmp-sound-settings-form">
+  <div class="sgmp-form-group">
+    <label>{{localize "SIMONE_GM_PANEL.Soundboard.SettingsPresets"}}</label>
+    <div class="sgmp-preset-chips">
+      {{#each presets as |preset|}}
+        <button type="button" class="sgmp-preset-chip"
+                title="{{preset.description}}"
+                data-preset-mode="{{preset.mode}}"
+                data-preset-avoid-repeat="{{preset.avoidImmediateRepeat}}"
+                data-preset-repeat="{{preset.repeat}}"
+                data-preset-offset-min="{{preset.offsetMin}}"
+                data-preset-offset-max="{{preset.offsetMax}}"
+                data-preset-volume-mode="{{preset.volumeMode}}"
+                data-preset-radius="{{preset.positional.radius}}"
+                data-preset-volume="{{preset.positional.volume}}"
+                data-preset-walls="{{preset.positional.walls}}"
+                data-preset-easing="{{preset.positional.easing}}"
+                data-preset-elevation="{{preset.positional.elevation}}">
+          {{preset.label}}
+        </button>
+      {{/each}}
+    </div>
+    <p class="sgmp-form-hint">{{localize "SIMONE_GM_PANEL.Soundboard.SettingsPresetsHint"}}</p>
+  </div>
+
+  <div class="sgmp-form-group">
+    <label>{{localize "SIMONE_GM_PANEL.Soundboard.GroupSettingsName"}}</label>
+    <input type="text" name="name" value="{{groupName}}" maxlength="60">
+  </div>
+
+  <div class="sgmp-form-group">
+    <label>{{localize "SIMONE_GM_PANEL.Soundboard.GroupSettingsMode"}}</label>
+    <select name="mode">
+      <option value="sequential" {{#if (eq mode "sequential")}}selected{{/if}}>{{localize "SIMONE_GM_PANEL.Soundboard.ModeSequential"}}</option>
+      <option value="random" {{#if (eq mode "random")}}selected{{/if}}>{{localize "SIMONE_GM_PANEL.Soundboard.ModeRandom"}}</option>
+    </select>
+    <p class="sgmp-form-hint">{{localize "SIMONE_GM_PANEL.Soundboard.GroupSettingsModeHint"}}</p>
+  </div>
+
+  <div class="sgmp-form-group">
+    <label class="sgmp-form-checkbox">
+      <input type="hidden" name="avoidImmediateRepeat" value="false">
+      <input type="checkbox" name="avoidImmediateRepeat" value="true" {{#if avoidImmediateRepeat}}checked{{/if}}>
+      <span>{{localize "SIMONE_GM_PANEL.Soundboard.GroupSettingsAvoidRepeat"}}</span>
+    </label>
+    <p class="sgmp-form-hint">{{localize "SIMONE_GM_PANEL.Soundboard.GroupSettingsAvoidRepeatHint"}}</p>
+  </div>
+
+  <div class="sgmp-form-group">
+    <label class="sgmp-form-checkbox">
+      <input type="hidden" name="repeat" value="false">
+      <input type="checkbox" name="repeat" value="true" {{#if repeat}}checked{{/if}}>
+      <span>{{localize "SIMONE_GM_PANEL.Soundboard.GroupSettingsRepeat"}}</span>
+    </label>
+    <p class="sgmp-form-hint">{{localize "SIMONE_GM_PANEL.Soundboard.GroupSettingsRepeatHint"}}</p>
+  </div>
+
+  <div class="sgmp-form-group">
+    <label>{{localize "SIMONE_GM_PANEL.Soundboard.GroupSettingsDelay"}}</label>
+    <div class="sgmp-offset-row">
+      <input type="number" name="offsetMin" min="0" max="60000" step="100"
+             value="{{offsetMin}}" placeholder="min">
+      <span class="sgmp-offset-sep">&ndash;</span>
+      <input type="number" name="offsetMax" min="0" max="60000" step="100"
+             value="{{offsetMax}}" placeholder="max">
+      <span class="sgmp-offset-unit">ms</span>
+    </div>
+    <p class="sgmp-form-hint">{{localize "SIMONE_GM_PANEL.Soundboard.GroupSettingsDelayHint"}}</p>
+  </div>
+
+  <div class="sgmp-form-group">
+    <label>{{localize "SIMONE_GM_PANEL.Soundboard.GroupSettingsVolumeMode"}}</label>
+    <select name="volumeMode">
+      <option value="item" {{#if (eq volumeMode "item")}}selected{{/if}}>{{localize "SIMONE_GM_PANEL.Soundboard.GroupSettingsVolumeModeItem"}}</option>
+      <option value="group" {{#if (eq volumeMode "group")}}selected{{/if}}>{{localize "SIMONE_GM_PANEL.Soundboard.GroupSettingsVolumeModeGroup"}}</option>
+    </select>
+    <p class="sgmp-form-hint">{{localize "SIMONE_GM_PANEL.Soundboard.GroupSettingsVolumeModeHint"}}</p>
+  </div>
+
+  <div class="sgmp-form-group">
+    <label class="sgmp-form-checkbox">
+      <input type="hidden" name="perTokenDesync" value="false">
+      <input type="checkbox" name="perTokenDesync" value="true" {{#if perTokenDesync}}checked{{/if}}>
+      <span>{{localize "SIMONE_GM_PANEL.Soundboard.GroupSettingsPerTokenDesync"}}</span>
+    </label>
+    <p class="sgmp-form-hint">{{localize "SIMONE_GM_PANEL.Soundboard.GroupSettingsPerTokenDesyncHint"}}</p>
+  </div>
+
+  <div class="sgmp-form-group">
+    <label>{{localize "SIMONE_GM_PANEL.Soundboard.SettingsPositionalTitle"}}</label>
+
+    <div class="sgmp-positional-field">
+      <label>{{localize "SIMONE_GM_PANEL.Soundboard.SettingsPositionalRadius"}}</label>
+      <input type="number" name="positionalRadius" min="0" step="1"
+             value="{{positional.radius}}" placeholder="{{globalDefaults.radius}}">
+    </div>
+
+    <div class="sgmp-positional-field">
+      <label>{{localize "SIMONE_GM_PANEL.Soundboard.SettingsPositionalVolume"}}</label>
+      <div class="sgmp-range-row">
+        <input type="range" name="positionalVolume" min="0" max="1" step="0.05" value="{{positional.volume}}">
+        <span class="sgmp-range-value">{{positional.volume}}</span>
+      </div>
+    </div>
+
+    <div class="sgmp-positional-field">
+      <label class="sgmp-form-checkbox">
+        <input type="hidden" name="positionalWalls" value="false">
+        <input type="checkbox" name="positionalWalls" value="true" {{#if positional.walls}}checked{{/if}}>
+        <span>{{localize "SIMONE_GM_PANEL.Soundboard.SettingsPositionalWalls"}}</span>
+      </label>
+    </div>
+
+    <div class="sgmp-positional-field">
+      <label class="sgmp-form-checkbox">
+        <input type="hidden" name="positionalEasing" value="false">
+        <input type="checkbox" name="positionalEasing" value="true" {{#if positional.easing}}checked{{/if}}>
+        <span>{{localize "SIMONE_GM_PANEL.Soundboard.SettingsPositionalEasing"}}</span>
+      </label>
+    </div>
+
+    <div class="sgmp-positional-field">
+      <label>{{localize "SIMONE_GM_PANEL.Soundboard.SettingsPositionalElevation"}}</label>
+      <input type="number" name="positionalElevation" step="1"
+             value="{{positional.elevation}}" placeholder="{{globalDefaults.elevation}}">
+    </div>
+  </div>
+</form>

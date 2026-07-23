@@ -1,0 +1,455 @@
+﻿.sgmp-soundboard-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.sgmp-section-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.9rem;
+  border: 1px solid var(--sgmp-border);
+  border-radius: 12px;
+  background: var(--sgmp-surface-alt);
+}
+
+.sgmp-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.sgmp-checkbox-row input {
+  margin: 0;
+}
+
+.sgmp-hint {
+  margin: 0;
+  color: var(--color-text-light-6);
+  line-height: 1.45;
+}
+
+.sgmp-soundboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding-right: 0.05rem;
+}
+
+.sgmp-soundboard-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.05rem 0.22rem;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.sgmp-soundboard-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* â”€â”€ Recent Playlist Chips â”€â”€ */
+.sgmp-recent-playlists {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  padding: 0.15rem 0.25rem 0.25rem 0.25rem;
+}
+
+.sgmp-recent-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  height: 26px;
+  padding: 0 0.45rem;
+  border: 1px solid var(--sgmp-border);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text-light-3);
+  font-size: 0.65rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+  white-space: nowrap;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sgmp-recent-chip:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--sgmp-accent);
+  color: var(--color-text-light-0);
+}
+
+.sgmp-recent-chip--active {
+  background: rgba(216, 167, 79, 0.18);
+  border-color: rgba(216, 167, 79, 0.55);
+  color: var(--sgmp-accent);
+}
+
+.sgmp-recent-chip--active:hover {
+  background: rgba(216, 167, 79, 0.26);
+  border-color: rgba(216, 167, 79, 0.7);
+}
+
+.sgmp-recent-chip-count {
+  font-size: 0.52rem;
+  font-weight: 600;
+  color: var(--color-text-light-0);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0 0.25rem;
+  border-radius: 8px;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+
+.sgmp-recent-chip--active .sgmp-recent-chip-count {
+  color: var(--sgmp-accent);
+  background: rgba(216, 167, 79, 0.2);
+}
+
+.sgmp-clean-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  height: 22px;
+  padding: 0 0.4rem;
+  border: 1px solid rgba(220, 66, 66, 0.42);
+  border-radius: 5px;
+  font-size: 0.59rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #f48c8c;
+  background: rgba(220, 66, 66, 0.12);
+  transition: border-color 120ms ease, background 120ms ease, box-shadow 120ms ease;
+}
+
+.sgmp-clean-all-btn:hover,
+.sgmp-clean-all-btn:focus-visible {
+  outline: none;
+  border-color: rgba(220, 66, 66, 0.75);
+  background: rgba(220, 66, 66, 0.24);
+  box-shadow: 0 0 0 1px rgba(220, 66, 66, 0.32);
+}
+
+.sgmp-clean-all-btn i {
+  font-size: 0.62rem;
+}
+
+.sgmp-delete-playlist-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  height: 22px;
+  padding: 0 0.35rem;
+  border: 1px solid rgba(220, 66, 66, 0.25);
+  border-radius: 4px;
+  font-size: 0.52rem;
+  color: #d97a7a;
+  background: rgba(220, 66, 66, 0.06);
+  cursor: pointer;
+}
+.sgmp-delete-playlist-btn:hover { background: rgba(220, 66, 66, 0.15); color: #f48c8c; }
+.sgmp-delete-playlist-btn i { font-size: 0.55rem; }
+
+.sgmp-export-btn,
+.sgmp-import-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.22rem;
+  height: 22px;
+  padding: 0 0.4rem;
+  border: 1px solid var(--sgmp-border);
+  border-radius: 5px;
+  font-size: 0.59rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-text-light-1);
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.sgmp-new-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid var(--sgmp-border);
+  border-radius: 5px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--color-text-light-1);
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease;
+  margin-right: 0.3rem;
+}
+
+.sgmp-new-btn:hover {
+  border-color: var(--sgmp-accent);
+  background: rgba(216, 167, 79, 0.12);
+}
+
+.sgmp-export-btn:hover,
+.sgmp-import-btn:hover {
+  border-color: var(--sgmp-accent);
+  background: rgba(216, 167, 79, 0.12);
+}
+
+.sgmp-export-btn i,
+.sgmp-import-btn i {
+  font-size: 0.58rem;
+}
+
+.sgmp-sound-row-settings {
+  color: var(--color-text-light-6);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: color 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.sgmp-sound-row-settings:hover,
+.sgmp-sound-row-settings:focus-visible {
+  color: var(--color-text-light-0);
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+.sgmp-soundboard-dropzone {
+  position: relative;
+  transition: border-color 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+.sgmp-soundboard-dropzone.is-dragover {
+  border-color: rgba(216, 167, 79, 0.75);
+  background: linear-gradient(180deg, rgba(216, 167, 79, 0.14), rgba(216, 167, 79, 0.05));
+  box-shadow: 0 0 0 1px rgba(216, 167, 79, 0.3);
+}
+
+.sgmp-soundboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+}
+
+.sgmp-soundboard-search {
+  width: 100%;
+  height: 28px;
+  min-height: 28px;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--sgmp-border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-light-0);
+  font-size: 0.72rem;
+}
+
+.sgmp-soundboard-search::placeholder {
+  color: var(--color-text-light-6);
+}
+
+.sgmp-soundboard-search:focus-visible {
+  outline: none;
+  border-color: var(--sgmp-accent);
+  box-shadow: 0 0 0 1px var(--sgmp-accent);
+}
+
+.sgmp-soundboard-drop-copy {
+  font-size: 0.67rem;
+  line-height: 1.2;
+}
+
+.sgmp-soundboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 0.05rem;
+}
+
+.sgmp-sound-row {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-width: 0;
+  padding: 0.26rem 0.28rem;
+  border: 1px solid var(--sgmp-border);
+  border-radius: 8px;
+  background: rgba(18, 20, 26, 0.58);
+  transition: border-color 120ms ease, background 120ms ease, transform 120ms ease;
+}
+
+.sgmp-sound-row.is-missing {
+  opacity: 0.72;
+}
+
+.sgmp-sound-row.is-playing {
+  border-color: rgba(216, 167, 79, 0.45);
+  background: linear-gradient(180deg, rgba(216, 167, 79, 0.12), rgba(216, 167, 79, 0.05));
+}
+
+.sgmp-sound-row.is-dragging {
+  opacity: 0.38;
+  transform: scale(0.97);
+  border-style: dashed;
+  border-color: var(--sgmp-accent);
+  background: rgba(216, 167, 79, 0.08);
+}
+
+.sgmp-sound-row.is-drop-before {
+  box-shadow: inset 0 3px 0 0 var(--sgmp-accent);
+  background: linear-gradient(180deg, rgba(216, 167, 79, 0.1), transparent 40%);
+}
+
+.sgmp-sound-row.is-drop-after {
+  box-shadow: inset 0 -3px 0 0 var(--sgmp-accent);
+  background: linear-gradient(0deg, rgba(216, 167, 79, 0.1), transparent 40%);
+}
+
+.sgmp-sound-row-drag,
+.sgmp-sound-row-loop,
+.sgmp-sound-row-play,
+.sgmp-sound-row-stop,
+.sgmp-sound-row-resume,
+.sgmp-sound-row-remove,
+.sgmp-sound-row-settings {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  padding: 0;
+  border: 1px solid var(--sgmp-border);
+  border-radius: 6px;
+  font-size: 0.68rem;
+  color: var(--color-text-light-0);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sgmp-sound-row-drag {
+  cursor: grab;
+  user-select: none;
+}
+
+.sgmp-sound-row-loop {
+  color: var(--color-text-light-6);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: color 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.sgmp-sound-row-loop:hover,
+.sgmp-sound-row-loop:focus-visible {
+  color: var(--color-text-light-0);
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+.sgmp-sound-row-loop.is-active {
+  color: var(--sgmp-accent);
+  border-color: rgba(216, 167, 79, 0.55);
+  background: rgba(216, 167, 79, 0.15);
+}
+
+.sgmp-sound-row-loop.is-active:hover,
+.sgmp-sound-row-loop.is-active:focus-visible {
+  color: var(--sgmp-accent);
+  border-color: var(--sgmp-accent);
+  background: rgba(216, 167, 79, 0.25);
+}
+
+.sgmp-sound-row-play {
+  position: relative;
+  background: linear-gradient(135deg, rgba(216, 167, 79, 0.28), rgba(216, 167, 79, 0.12));
+}
+
+.sgmp-sound-row-drag:hover,
+.sgmp-sound-row-drag:focus-visible,
+.sgmp-sound-row-play:hover,
+.sgmp-sound-row-play:focus-visible,
+.sgmp-sound-row-stop:hover,
+.sgmp-sound-row-stop:focus-visible,
+.sgmp-sound-row-resume:hover,
+.sgmp-sound-row-resume:focus-visible,
+.sgmp-sound-row-remove:hover,
+.sgmp-sound-row-remove:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--sgmp-accent);
+  border-color: var(--sgmp-accent);
+}
+
+.sgmp-sound-row-play[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+
+}
+
+.sgmp-sound-row-stop {
+  background: linear-gradient(135deg, rgba(220, 80, 70, 0.28), rgba(220, 80, 70, 0.12));
+}
+
+.sgmp-sound-row-stop:hover,
+.sgmp-sound-row-stop:focus-visible {
+  border-color: rgba(220, 80, 70, 0.7);
+}
+
+.sgmp-sound-row-resume {
+  background: linear-gradient(135deg, rgba(100, 200, 130, 0.28), rgba(100, 200, 130, 0.12));
+}
+
+.sgmp-sound-row-resume:hover,
+.sgmp-sound-row-resume:focus-visible {
+  border-color: rgba(100, 200, 130, 0.7);
+}
+
+.sgmp-sound-row-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.sgmp-sound-row-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: var(--color-text-light-0);
+}
+
+.sgmp-sound-row-subtitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.59rem;
+  color: var(--color-text-light-6);
+}
+
+.sgmp-soundboard-empty {
+  padding: 0.42rem 0.36rem;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  font-size: 0.67rem;
+  text-align: center;
+  color: var(--color-text-light-6);
+}

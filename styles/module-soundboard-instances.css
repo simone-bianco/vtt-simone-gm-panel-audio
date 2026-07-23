@@ -1,0 +1,398 @@
+﻿/* â”€â”€ Active Instances Button â”€â”€ */
+.sgmp-sound-row-instances {
+  position: relative;
+  color: var(--color-text-light-6);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: color 120ms ease, background 120ms ease;
+}
+
+.sgmp-sound-row-instances:hover,
+.sgmp-sound-row-instances:focus-visible {
+  color: var(--sgmp-accent);
+  background: rgba(216, 167, 79, 0.12);
+  outline: none;
+}
+
+.sgmp-instance-count-badge {
+  position: absolute;
+  top: -5px;
+  right: -4px;
+  min-width: 12px;
+  height: 12px;
+  padding: 0 2px;
+  font-size: 0.40rem;
+  font-weight: 700;
+  line-height: 12px;
+  text-align: center;
+  color: #1a1d24;
+  background: var(--sgmp-accent);
+  border-radius: 6px;
+}
+
+/* â”€â”€ Active Instances Modal â”€â”€ */
+.sgmp-instance-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 280px;
+}
+
+.sgmp-instance-toolbar {
+  display: flex;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--sgmp-border);
+}
+
+.sgmp-instance-mass-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.58rem;
+  font-weight: 600;
+  color: var(--color-text-light-1);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--sgmp-border);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.sgmp-instance-mass-btn i {
+  font-size: 0.55rem;
+}
+
+.sgmp-instance-mass-btn:hover,
+.sgmp-instance-mass-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--sgmp-accent);
+  outline: none;
+}
+
+.sgmp-instance-mass-btn--danger:hover,
+.sgmp-instance-mass-btn--danger:focus-visible {
+  border-color: rgba(220, 80, 70, 0.7);
+  background: rgba(220, 80, 70, 0.12);
+}
+
+.sgmp-instance-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.35rem 0.45rem;
+  border: 1px solid var(--sgmp-border);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.sgmp-instance-row.is-ambient {
+  border-color: rgba(88, 184, 130, 0.35);
+  background: linear-gradient(180deg, rgba(88, 184, 130, 0.12), rgba(88, 184, 130, 0.04));
+}
+
+.sgmp-instance-info {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.sgmp-instance-tokens {
+  font-size: 0.62rem;
+  color: var(--color-text-light-1);
+}
+
+.sgmp-instance-tokens i {
+  margin-right: 0.15rem;
+  font-size: 0.55rem;
+  color: var(--sgmp-accent);
+}
+
+.sgmp-instance-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0 0.28rem;
+  height: 16px;
+  font-size: 0.50rem;
+  font-weight: 600;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.sgmp-instance-badge--loop {
+  color: var(--sgmp-accent);
+  background: rgba(216, 167, 79, 0.15);
+  border: 1px solid rgba(216, 167, 79, 0.3);
+}
+
+.sgmp-instance-badge--paused {
+  color: #f48c8c;
+  background: rgba(220, 66, 66, 0.12);
+  border: 1px solid rgba(220, 66, 66, 0.25);
+}
+
+.sgmp-instance-badge--ambient {
+  color: #7ce0a5;
+  background: rgba(88, 184, 130, 0.14);
+  border: 1px solid rgba(88, 184, 130, 0.28);
+}
+
+.sgmp-instance-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.sgmp-instance-btn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--sgmp-border);
+  border-radius: 5px;
+  font-size: 0.58rem;
+  color: var(--color-text-light-0);
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: 100ms ease;
+}
+
+.sgmp-instance-btn:hover {
+  border-color: var(--sgmp-accent);
+  background: rgba(216, 167, 79, 0.15);
+}
+
+.sgmp-instance-btn--stop:hover {
+  border-color: rgba(220, 66, 66, 0.6);
+  background: rgba(220, 66, 66, 0.2);
+  color: #f48c8c;
+}
+
+.sgmp-instance-empty {
+  text-align: center;
+  font-size: 0.62rem;
+  color: var(--color-text-light-6);
+  font-style: italic;
+  padding: 0.5rem;
+}
+
+/* â”€â”€ Expanded Row (Inline Active Instances) â”€â”€ */
+.sgmp-sound-row.is-expanded {
+  flex-wrap: wrap;
+  background: rgba(15, 18, 24, 0.5);
+  border-color: var(--sgmp-accent);
+}
+
+.sgmp-sound-row-main {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+  padding: 0.3rem 0.35rem;
+}
+
+.sgmp-sound-row-expand {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border: 1px solid var(--sgmp-border);
+  border-radius: 5px;
+  background: rgba(10, 12, 16, 0.6);
+  color: var(--color-text-light-6);
+  cursor: pointer;
+  font-size: 0.56rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: 120ms ease;
+  margin-left: auto;
+}
+
+.sgmp-sound-row-expand:hover,
+
+.sgmp-sound-row-expand:focus-visible {
+  color: var(--sgmp-accent);
+  background: rgba(216, 167, 79, 0.12);
+  outline: none;
+}
+
+.sgmp-sound-row-expand.is-open {
+  color: var(--sgmp-accent);
+  border-color: rgba(216, 167, 79, 0.35);
+}
+
+/* Expanded section below row */
+.sgmp-sound-row-expanded {
+  width: 100%;
+  border-top: 1px solid var(--sgmp-border);
+  padding: 0.4rem;
+  background: rgba(5, 7, 10, 0.4);
+}
+
+.sgmp-expanded-toolbar {
+  display: flex;
+  gap: 0.3rem;
+  margin-bottom: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.sgmp-expanded-mass-btn {
+  padding: 0.15rem 0.45rem;
+  border: 1px solid var(--sgmp-border);
+  border-radius: 4px;
+  background: rgba(20, 23, 30, 0.7);
+  color: var(--color-text-light-4);
+  font-size: 0.52rem;
+  cursor: pointer;
+  transition: 100ms ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.sgmp-expanded-mass-btn i {
+  font-size: 0.46rem;
+}
+
+.sgmp-expanded-mass-btn:hover,
+.sgmp-expanded-mass-btn:focus-visible {
+  background: rgba(216, 167, 79, 0.15);
+  color: var(--sgmp-accent);
+  outline: none;
+}
+
+.sgmp-expanded-mass-btn--danger:hover,
+.sgmp-expanded-mass-btn--danger:focus-visible {
+  background: rgba(210, 48, 48, 0.2);
+  color: #d23030;
+  border-color: rgba(210, 48, 48, 0.35);
+}
+
+.sgmp-expanded-instance-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.sgmp-expanded-instance-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem;
+  padding: 0.18rem 0.3rem;
+  border-radius: 4px;
+  background: rgba(20, 23, 30, 0.5);
+  border: 1px solid var(--sgmp-border);
+  font-size: 0.52rem;
+}
+
+.sgmp-expanded-instance-row.is-ambient {
+  border-left: 2px solid var(--sgmp-accent);
+}
+
+.sgmp-expanded-instance-info {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.sgmp-expanded-instance-info i {
+  font-size: 0.5rem;
+  color: var(--color-text-light-6);
+  flex-shrink: 0;
+}
+
+.sgmp-expanded-token-btn {
+  border: none;
+  background: transparent;
+  color: var(--sgmp-accent);
+  font-size: 0.5rem;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: 100ms ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.sgmp-expanded-token-btn:hover,
+.sgmp-expanded-token-btn:focus-visible {
+  text-decoration-color: var(--sgmp-accent);
+  outline: none;
+}
+
+.sgmp-expanded-token-name {
+  color: var(--color-text-light-4);
+  font-size: 0.5rem;
+}
+
+.sgmp-expanded-badge {
+  font-size: 0.42rem;
+  padding: 0.06rem 0.25rem;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--color-text-light-6);
+  flex-shrink: 0;
+}
+
+.sgmp-expanded-badge--loop {
+  color: var(--sgmp-accent);
+}
+
+.sgmp-expanded-badge--paused {
+  color: #e0a040;
+  background: rgba(224, 160, 64, 0.12);
+}
+
+.sgmp-expanded-instance-actions {
+  display: flex;
+  gap: 0.18rem;
+  flex-shrink: 0;
+}
+
+.sgmp-expanded-instance-btn {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--sgmp-border);
+  border-radius: 3px;
+  background: rgba(10, 12, 16, 0.5);
+  color: var(--color-text-light-5);
+  cursor: pointer;
+  font-size: 0.42rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 100ms ease;
+}
+
+.sgmp-expanded-instance-btn:hover,
+.sgmp-expanded-instance-btn:focus-visible {
+  background: rgba(216, 167, 79, 0.15);
+  color: var(--sgmp-accent);
+  outline: none;
+}
+
+.sgmp-expanded-instance-btn--stop:hover,
+.sgmp-expanded-instance-btn--stop:focus-visible {
+  background: rgba(210, 48, 48, 0.2);
+  color: #d23030;
+}
+
+.sgmp-expanded-hint {
+  font-size: 0.48rem;
+  color: var(--color-text-light-7);
+  font-style: italic;
+  text-align: center;
+  margin: 0.25rem 0 0;
+  padding: 0;
+}
