@@ -187,12 +187,7 @@
                                            },
                             "Notifications":  {
                                                   "MissingSound":  "Impossibile riprodurre il suono selezionato dalla soundboard.",
-                                                  "InvalidSoundDrop":  "Trascina un singolo suono dalla Playlist nativa di Foundry dentro la soundboard.",
-                                                  "TokenNotFound":  "Token non trovato sulla scena. Potrebbe essere stato rimosso."
-                                              },
-                            "Tokens":  {
-                                           "Empty":  "Nessun token selezionato",
-                                           "PanTo":  "Focus su {{name}}"
-                                       }
+                                                  "InvalidSoundDrop":  "Trascina un singolo suono dalla Playlist nativa di Foundry dentro la soundboard."
+                                              }
                         }
 }

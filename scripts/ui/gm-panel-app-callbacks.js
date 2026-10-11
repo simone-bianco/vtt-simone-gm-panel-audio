@@ -12,7 +12,6 @@ import { openGroupSettings } from "./gm-panel-group-settings.js";
  * @param {import("./gm-panel-soundboard-store.js").GmPanelSoundboardStore} deps.store
  * @param {import("./gm-panel-audio-controller.js").GmPanelAudioController} deps.audioController
  * @param {import("./gm-panel-group-audio-controller.js").GmPanelGroupAudioController} deps.groupController
- * @param {import("./gm-panel-token-controller.js").GmPanelTokenController} deps.tokenController
  * @param {function(string): void} deps.toggleGroupExpand
  * @param {function(string): void} deps.toggleItemSelection
  * @param {function(): Promise<void>} deps.createGroupFromSelection
@@ -20,7 +19,7 @@ import { openGroupSettings } from "./gm-panel-group-settings.js";
  * @returns {object} callbacks object for attachSoundboardActionListeners
  */
 export function buildSoundboardCallbacks(deps) {
-  const { app, store, audioController, groupController, tokenController,
+  const { app, store, audioController, groupController,
     toggleGroupExpand, toggleItemSelection, createGroupFromSelection,
     getPositionalDefaults } = deps;
 
@@ -86,7 +85,7 @@ export function buildSoundboardCallbacks(deps) {
       }
     },
     panGroupSession: async (tokenUuid) => {
-      await tokenController.panToToken(tokenUuid);
+      await app.panToToken(tokenUuid);
     },
     pauseGroupAll: async (groupId) => {
       if (await runGroupAction("pause-all", () => groupController.pauseAllGroupSessions(groupId))) {

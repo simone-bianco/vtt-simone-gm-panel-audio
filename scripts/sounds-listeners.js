@@ -1,4 +1,4 @@
-import { delegateClick, querySelectorSafe } from "./dom.js";
+import { querySelectorSafe } from "./dom.js";
 
 export function attachDropzoneListeners(element, { handleSoundboardDrop }, addCleanup) {
   const dropzone = querySelectorSafe(element, '[data-testid="sgmp-soundboard-dropzone"]');
@@ -40,12 +40,4 @@ export function attachSearchListener(element, { setSearchQuery, render }, addCle
     input.removeEventListener("input", onInput);
     input.removeEventListener("keydown", onKeyDown);
   });
-}
-
-export function attachTokenPanListener(element, { panToToken }, addCleanup) {
-  const cleanup = delegateClick(element, '[data-action="pan-to-token"]', (event, matched) => {
-    event.preventDefault();
-    void panToToken(matched.dataset.tokenUuid ?? "");
-  });
-  if (cleanup) addCleanup(cleanup);
 }

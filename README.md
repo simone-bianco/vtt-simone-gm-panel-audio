@@ -11,6 +11,7 @@ Soundboard, playlists, groups, and positional audio for Simone GM Panel.
 - Soundboard and saved playlists.
 - Grouped, token-bound, and positional playback.
 - Owned AmbientSound lifecycle with cleanup and migration safeguards.
+- Uses Core's live selected-token and canvas-focus services for token audio and session icons.
 
 ## Installation
 

@@ -10,7 +10,7 @@ import {
   setSoundboardState,
 } from "./settings.js";
 import { initializeSoundsFeature } from "./initialization.js";
-import { attachDropzoneListeners, attachSearchListener, attachTokenPanListener } from "./sounds-listeners.js";
+import { attachDropzoneListeners, attachSearchListener } from "./sounds-listeners.js";
 import { buildSoundboardCallbacks } from "./ui/gm-panel-app-callbacks.js";
 import { handleGroupMapDrop, handleItemMapDrop } from "./ui/gm-panel-app-map-drop.js";
 import { GmPanelAudioController } from "./ui/gm-panel-audio-controller.js";
@@ -19,14 +19,12 @@ import { attachDragRowListeners, attachRowExpandListeners } from "./ui/gm-panel-
 import { GmPanelGroupAudioController } from "./ui/gm-panel-group-audio-controller.js";
 import { attachCanvasDropListener } from "./ui/gm-panel-map-drop.js";
 import { GmPanelSoundboardStore } from "./ui/gm-panel-soundboard-store.js";
-import { GmPanelTokenController } from "./ui/gm-panel-token-controller.js";
 
 class SoundsFeature {
   #hostServices = null;
   #audioController = null;
   #groupController = null;
   #store = null;
-  #tokenController = null;
   #canvasDropCleanup = null;
   #restoreTimer = null;
   #activated = false;
@@ -43,7 +41,6 @@ class SoundsFeature {
       icon: "fa-solid fa-volume-high",
       order: 20,
       template: "modules/simone-gm-panel-sounds/templates/soundboards-tab.hbs",
-      footerTemplate: "modules/simone-gm-panel-sounds/templates/selected-tokens-footer.hbs",
       prepareContext: (hostContext) => this.prepareContext(hostContext),
       activate: (hostServices) => this.activate(hostServices),
       deactivate: () => this.deactivate(),
@@ -56,7 +53,11 @@ class SoundsFeature {
   }
 
   get selectedTokens() {
-    return this.#tokenController?.selectedTokens ?? [];
+    return this.#hostServices?.selectedTokens ?? [];
+  }
+
+  async panToToken(uuid) {
+    await this.#hostServices?.panToToken(uuid);
   }
 
   async activate(hostServices) {
@@ -71,8 +72,6 @@ class SoundsFeature {
       getPositionalDefaults: () => this.getPositionalDefaults(),
     });
     this.#store = new GmPanelSoundboardStore(this);
-    this.#tokenController = new GmPanelTokenController(this);
-    this.#tokenController.activate();
     this.#audioController.activate();
     this.#activated = true;
 
@@ -98,7 +97,6 @@ class SoundsFeature {
     this.#canvasDropCleanup = null;
 
     this.#audioController?.deactivate();
-    this.#tokenController?.deactivate();
     await this.#store?.flushAutosave?.();
     await this.#groupController?.stopAllGroupsAndWait?.();
     await this.#audioController?.stopAllAudio?.();
@@ -107,7 +105,6 @@ class SoundsFeature {
     this.#audioController = null;
     this.#groupController = null;
     this.#store = null;
-    this.#tokenController = null;
     this.#hostServices = null;
     debug("Sounds feature deactivated");
   }
@@ -144,7 +141,6 @@ class SoundsFeature {
     }
 
     context.soundboardSearchQuery = this.#searchQuery;
-    context.selectedTokens = this.selectedTokens;
     context.isRestoring = this.#audioController?.isRestoring === true;
     if (this.#store?.currentPlaylistKey === null) this.#store.restoreCurrentPlaylist();
     context.currentPlaylistName = this.#store?.currentPlaylistName ?? null;
@@ -166,7 +162,6 @@ class SoundsFeature {
       store: this.#store,
       audioController: this.#audioController,
       groupController: this.#groupController,
-      tokenController: this.#tokenController,
       toggleGroupExpand: (id) => this.#toggleGroupExpand(id),
       toggleItemSelection: (id) => this.#toggleItemSelection(id),
       createGroupFromSelection: () => this.#createGroupFromSelection(),
@@ -198,10 +193,6 @@ class SoundsFeature {
       reorderGroupItems: (groupId, sourceId, targetId, after) =>
         void this.#store.reorderGroupItems(groupId, sourceId, targetId, after),
     }, addCleanup);
-    attachTokenPanListener(element, {
-      panToToken: (uuid) => this.#tokenController.panToToken(uuid),
-    }, addCleanup);
-
     this.#canvasDropCleanup?.destroy?.();
     const canvasDropCleanup = attachCanvasDropListener(element, {
       onItemMapDrop: (data) => handleItemMapDrop(this, data),

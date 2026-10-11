@@ -187,12 +187,7 @@
                                            },
                             "Notifications":  {
                                                   "MissingSound":  "The selected soundboard sound could not be played.",
-                                                  "InvalidSoundDrop":  "Drag a single sound from Foundry\u0027s native Playlist into the soundboard.",
-                                                  "TokenNotFound":  "Token not found on canvas. It may have been removed."
-                                              },
-                            "Tokens":  {
-                                           "Empty":  "No tokens selected",
-                                           "PanTo":  "Focus on {{name}}"
-                                       }
+                                                  "InvalidSoundDrop":  "Drag a single sound from Foundry\u0027s native Playlist into the soundboard."
+                                              }
                         }
 }

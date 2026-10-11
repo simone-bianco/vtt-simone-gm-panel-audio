@@ -74,9 +74,7 @@ export function attachSoundboardActionListeners(element, callbacks, addCleanup) 
     { action: "expand-pause-all", callback: async (uuid) => { await callbacks.pauseAllForUuid(uuid); await callbacks.render(); } },
     { action: "expand-resume-all", callback: async (uuid) => { await callbacks.resumeAllForUuid(uuid); await callbacks.render(); } },
     { action: "expand-remove-all", callback: async (uuid) => { await callbacks.removeAllForUuid(uuid); await callbacks.render(); } },
-    // NOTE: pan-to-token is handled separately by attachTokenPanListener to avoid
-    // listener duplication. It reads data-token-uuid (not data-sound-uuid) so it
-    // does not fit the hasUuid pattern.
+    // Core handles pan-to-token (data-token-uuid) across the whole panel.
   ];
 
   // NOTE: quick-load-playlist uses data-playlist-key (not data-sound-uuid).
